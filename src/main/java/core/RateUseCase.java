@@ -1,10 +1,19 @@
-import java.util.Map;
+package core;
+
 import java.util.HashMap;
+import java.util.Map;
+
+import utils.Config;
+import vo.Currency;
 
 public interface RateUseCase {
+    boolean containsCurrency(String currencyCode);
     double getRate(Currency currency);
     Map<Currency, Double> getAllRates();
     void updateRates();
+    static RateUseCase get() {
+        return new RateUseCaseImpl(new LocalRateDataSource(), new RemoteRateDataSource());
+    }
 }
 
 class RateUseCaseImpl implements RateUseCase {
@@ -16,6 +25,13 @@ class RateUseCaseImpl implements RateUseCase {
         this.local = local;
         this.remote = remote;
         rates = new HashMap<>();
+    }
+
+    @Override
+    public boolean containsCurrency(String currencyCode) {
+        if (currencyCode.equals(Config.BASE_CURRENCY_CODE))
+            return true;
+        return rates.containsKey(new Currency(currencyCode));
     }
 
     @Override

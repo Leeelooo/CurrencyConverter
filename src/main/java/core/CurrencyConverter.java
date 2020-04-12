@@ -1,5 +1,11 @@
-import java.util.Map;
+package core;
+
+import utils.Config;
+import vo.Amount;
+import vo.Currency;
+
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class CurrencyConverter {
@@ -7,7 +13,7 @@ public class CurrencyConverter {
 
     /**
      * Converting amount to another currency.
-     * 
+     *
      * @param fromCode   currency code for converting. Null for base code.
      * @param fromAmount amount of money to be converted.
      * @param toCode     currency code to be converted from. Null for base code.
@@ -58,7 +64,7 @@ public class CurrencyConverter {
 
     /**
      * Returns the list of currencies' codes.
-     * 
+     *
      * @return List of available currencies' codes.
      */
     public static List<String> getAllCodes() {
@@ -72,7 +78,7 @@ public class CurrencyConverter {
 
     /**
      * Returns the pairs of currency code and it rate to base currency.
-     * 
+     *
      * @return list of pairs of available currencies.
      */
     public static Map<Currency, Double> getRates() {
