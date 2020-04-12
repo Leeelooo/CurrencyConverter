@@ -12,6 +12,7 @@ public final class Commands {
         CODES,
         CURRENCIES,
         HELP,
+        DIFF,
         WRONG
     }
 
@@ -60,6 +61,12 @@ public final class Commands {
                         return new WrongCommand();
                     }
                     option = Option.HELP;
+                    break;
+                case "-diff":
+                    if (option != Option.WRONG) {
+                        return new WrongCommand();
+                    }
+                    option = Option.DIFF;
                     break;
                 case "-from_amount":
                     fromAmount = Double.parseDouble(options[++i]);
@@ -119,6 +126,11 @@ public final class Commands {
                     return new WrongCommand();
                 }
                 return new HelpCommand();
+            case DIFF:
+                if (fromAmount != null || fromCode != null || toCode != null) {
+                    return new WrongCommand();
+                }
+                return new DiffCommand(useCase);
             case WRONG:
                 return new WrongCommand();
         }
