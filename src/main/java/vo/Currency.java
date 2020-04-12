@@ -1,3 +1,5 @@
+package vo;
+
 import java.util.Objects;
 
 /**

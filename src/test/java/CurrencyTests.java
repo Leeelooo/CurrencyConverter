@@ -1,5 +1,8 @@
+import core.CurrencyConverter;
 import org.junit.Assert;
 import org.junit.Test;
+
+import vo.Amount;
 
 import java.util.List;
 import java.util.Random;
@@ -27,6 +30,7 @@ public class CurrencyTests {
                 120.d,
                 null
         );
+        assert amount != null;
         Assert.assertEquals(amount.getCurrency().getCode(), "EUR");
     }
 
@@ -37,7 +41,8 @@ public class CurrencyTests {
                 120.d,
                 "EUR"
         );
-        Assert.assertTrue(amount.getAmount() == 120.d);
+        assert amount != null;
+        Assert.assertEquals(120.d, amount.getAmount(), 0.0);
     }
 
     @Test

@@ -1,4 +1,9 @@
+package core;
+
 import org.json.JSONObject;
+
+import utils.Config;
+import vo.Currency;
 
 import java.io.*;
 import java.net.HttpURLConnection;
