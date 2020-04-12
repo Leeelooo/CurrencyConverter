@@ -12,11 +12,19 @@ public final class Commands {
         CODES,
         CURRENCIES,
         HELP,
+        DIFF,
         WRONG
+    }
+
+    public enum Source {
+        REMOTE,
+        LOCAL
     }
 
     public static Command of(RateUseCase useCase, String... options) {
         Option option = Option.WRONG;
+        Source source = Source.LOCAL;
+
         String toCode = null;
         String fromCode = null;
         Double fromAmount = null;
@@ -54,6 +62,12 @@ public final class Commands {
                     }
                     option = Option.HELP;
                     break;
+                case "-diff":
+                    if (option != Option.WRONG) {
+                        return new WrongCommand();
+                    }
+                    option = Option.DIFF;
+                    break;
                 case "-from_amount":
                     fromAmount = Double.parseDouble(options[++i]);
                     break;
@@ -62,6 +76,18 @@ public final class Commands {
                     break;
                 case "-to_code":
                     toCode = options[++i];
+                    break;
+                case "-source":
+                    switch (options[++i]) {
+                        case "local":
+                            source = Source.LOCAL; 
+                            break;
+                        case "remote":
+                            source = Source.REMOTE;
+                            break;
+                        default:
+                            return new WrongCommand();
+                    }
                     break;
                 default:
                     option = Option.WRONG;
@@ -79,7 +105,7 @@ public final class Commands {
                 }
                 Amount amount = new Amount(fromCode, fromAmount);
                 Currency currency = new Currency(toCode);
-                return new ConvertCommand(useCase, currency, amount);
+                return new ConvertCommand(useCase, currency, amount, source);
             case UPDATE:
                 if (fromAmount != null || fromCode != null || toCode != null) {
                     return new WrongCommand();
@@ -89,17 +115,22 @@ public final class Commands {
                 if (fromAmount != null || fromCode != null || toCode != null) {
                     return new WrongCommand();
                 }
-                return new CodesCommand(useCase);
+                return new CodesCommand(useCase, source);
             case CURRENCIES:
                 if (fromAmount != null || fromCode != null || toCode != null) {
                     return new WrongCommand();
                 }
-                return new CurrenciesCommand(useCase);
+                return new CurrenciesCommand(useCase, source);
             case HELP:
                 if (fromAmount != null || fromCode != null || toCode != null) {
                     return new WrongCommand();
                 }
                 return new HelpCommand();
+            case DIFF:
+                if (fromAmount != null || fromCode != null || toCode != null) {
+                    return new WrongCommand();
+                }
+                return new DiffCommand(useCase);
             case WRONG:
                 return new WrongCommand();
         }
