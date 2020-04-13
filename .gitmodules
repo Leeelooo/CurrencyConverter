@@ -1,3 +1,6 @@
 [submodule "ConverterSubmodule"]
 	path = ConverterSubmodule
 	url = https://github.com/Leeelooo/ConverterSubmodule
+[submodule "Converter"]
+	path = Converter
+	url = https://github.com/Leeelooo/Converter
