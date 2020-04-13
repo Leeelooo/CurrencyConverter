@@ -14,3 +14,5 @@ Command line tool for converting currencies using exchangeratesapi.io.
 -source - which source use to perform converting.
 
 -help - prints help message.
+
+test
