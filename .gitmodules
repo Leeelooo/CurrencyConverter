@@ -1,0 +1,3 @@
+[submodule "ConverterSubmodule"]
+	path = ConverterSubmodule
+	url = https://github.com/Leeelooo/ConverterSubmodule
